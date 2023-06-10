@@ -1,12 +1,14 @@
 package com.javyhuerta.app.service;
 
 import com.javyhuerta.app.entity.Producto;
+import com.javyhuerta.app.exception.ProductNameException;
 import com.javyhuerta.app.model.ProductoModel;
 import com.javyhuerta.app.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,14 +31,11 @@ public class ProductoService {
     }
 
     public Producto obtenerUno(Long id) {
-        return repository.findById(id).orElse(null);
+        throw new NoSuchElementException("Producto no encontrado");
     }
 
     public Producto crear(ProductoModel producto) {
-        Producto nuevoProducto = new Producto();
-        nuevoProducto.setNombre(producto.getNombre());
-        nuevoProducto.setPrecio(producto.getPrecio());
-        return repository.save(nuevoProducto);
+        throw new ProductNameException(producto);
     }
 
     public Producto actualizar(Producto producto, Long id) {
@@ -53,13 +52,6 @@ public class ProductoService {
 
     public Producto eliminar(Long id) {
 
-        Producto productoDb = this.obtenerUno(id);
-
-        if (productoDb != null) {
-            this.eliminar(id);
-            return productoDb;
-        }
-
-        return null;
+        throw new NoSuchElementException("Producto no encontrado");
     }
 }

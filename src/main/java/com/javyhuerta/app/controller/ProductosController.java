@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -74,7 +75,7 @@ public class ProductosController {
     })
     @Operation(summary = "Crea un producto", description = "Registra un nuevo producto")
     @PostMapping
-    public ResponseEntity<Producto> nuevoProducto(@RequestBody ProductoModel producto) {
+    public ResponseEntity<Producto> nuevoProducto(@Valid @RequestBody ProductoModel producto) {
         Producto productoDb = service.crear(producto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productoDb);
     }
